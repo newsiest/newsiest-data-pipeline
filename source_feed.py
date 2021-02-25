@@ -8,6 +8,7 @@ class SourceFeed:
     def __init__(self, url: str, on_complete) -> None:
         self.url = url
         self.last_updated: datetime = None
+        self.top_article_id: str = None
         self.last_id: str = None
         self.on_complete = on_complete
 
@@ -19,3 +20,6 @@ class SourceFeed:
 
         self.last_updated = feed.channel.updated
         self.on_complete()
+
+
+
