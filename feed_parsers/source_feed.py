@@ -21,5 +21,6 @@ class SourceFeed:
         self.last_updated = feed.channel.updated
         self.on_complete()
 
-
+    def __parse_last_updated(self):
+        pass
 
