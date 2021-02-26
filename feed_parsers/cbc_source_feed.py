@@ -7,7 +7,6 @@ from feed_parsers.source_feed import SourceFeed
 
 class CbcSourceFeed(SourceFeed):
 
-
     def _parse_last_updated(self, feed: feedparser) -> datetime:
         return date_parser.parse(feed.channel.updated)
 
