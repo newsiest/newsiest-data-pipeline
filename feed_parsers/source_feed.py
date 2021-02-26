@@ -1,6 +1,7 @@
 import feedparser
 import typing
 import abc
+import pytz
 import traceback
 from datetime import datetime
 from models.news_article import NewsArticle
@@ -11,9 +12,10 @@ class SourceFeed:
     """
 
     def __init__(self, url: str) -> None:
+        eastern = pytz.timezone('US/Eastern')
         self.url = url
-        self.last_updated: datetime = datetime(1971, 1, 1)
-        self.top_article_date: datetime = datetime(1971, 1, 1)
+        self.last_updated: datetime = datetime(1971, 1, 1, tzinfo=eastern)
+        self.top_article_date: datetime = datetime(1971, 1, 1, tzinfo=eastern)
         # self.on_complete = on_complete
 
     def fetch(self) -> [NewsArticle]:
@@ -28,7 +30,7 @@ class SourceFeed:
 
             # Only get new articles
             articles = self._parse_articles(feed)
-            articles = filter(lambda art: art.pub_date >= self.top_article_date) # TODO use bisect to improve performance
+            articles = list(filter(lambda art: art.pub_date >= self.top_article_date, articles)) # TODO use bisect to improve performance
 
             self.last_updated = last_updated
             self.top_article_date = articles[0].pub_date
@@ -41,8 +43,7 @@ class SourceFeed:
 
     def _parse_last_updated(self, feed: feedparser) -> datetime:
         raise NotImplementedError
-        pass
 
     def _parse_articles(self, feed: feedparser) -> [NewsArticle]:
-        pass
+        raise NotImplementedError
 
