@@ -7,10 +7,11 @@ from feed_parsers.source_feed import SourceFeed
 
 class CbcSourceFeed(SourceFeed):
 
-    def __parse_last_updated(self, feed: feedparser) -> datetime:
+
+    def _parse_last_updated(self, feed: feedparser) -> datetime:
         return date_parser.parse(feed.channel.updated)
 
-    def __parse_articles(self, feed: feedparser) -> [NewsArticle]:
+    def _parse_articles(self, feed: feedparser) -> [NewsArticle]:
         articles = []
         for e in feed.entries:
             articles.append(NewsArticle(

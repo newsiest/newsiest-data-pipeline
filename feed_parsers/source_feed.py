@@ -21,12 +21,13 @@ class SourceFeed:
             feed = feedparser.parse(self.url)
 
             # Only refresh feed if it updated
-            last_updated = self.__parse_last_updated(feed)
+
+            last_updated = self._parse_last_updated(feed)
             if last_updated <= self.last_updated:
                 return []
 
             # Only get new articles
-            articles = self.__parse_articles(feed)
+            articles = self._parse_articles(feed)
             articles = filter(lambda art: art.pub_date >= self.top_article_date) # TODO use bisect to improve performance
 
             self.last_updated = last_updated
@@ -38,9 +39,10 @@ class SourceFeed:
             traceback.print_exc()
             return []
 
-    def __parse_last_updated(self, feed: feedparser) -> datetime:
+    def _parse_last_updated(self, feed: feedparser) -> datetime:
+        raise NotImplementedError
         pass
 
-    def __parse_articles(self, feed: feedparser) -> [NewsArticle]:
+    def _parse_articles(self, feed: feedparser) -> [NewsArticle]:
         pass
 
