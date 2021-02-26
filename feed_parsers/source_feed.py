@@ -1,10 +1,11 @@
 import feedparser
-import typing
-import abc
+
 import pytz
 import traceback
 from datetime import datetime
+
 from models.news_article import NewsArticle
+
 
 class SourceFeed:
     """
@@ -23,14 +24,13 @@ class SourceFeed:
             feed = feedparser.parse(self.url)
 
             # Only refresh feed if it updated
-
             last_updated = self._parse_last_updated(feed)
             if last_updated <= self.last_updated:
                 return []
 
             # Only get new articles
-            articles = self._parse_articles(feed)
-            articles = list(filter(lambda art: art.pub_date >= self.top_article_date, articles)) # TODO use bisect to improve performance
+            articles = list(filter(lambda art: art.pub_date >= self.top_article_date,
+                                   self._parse_articles(feed)))  # TODO use bisect to improve performance
 
             self.last_updated = last_updated
             self.top_article_date = articles[0].pub_date
@@ -46,4 +46,3 @@ class SourceFeed:
 
     def _parse_articles(self, feed: feedparser) -> [NewsArticle]:
         raise NotImplementedError
-
