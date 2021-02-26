@@ -7,3 +7,6 @@ class NewsArticle:
         self.url = url
         self.img_url = img_url
         self.pub_date = pub_date
+
+    def __str__(self):
+        return self.title
