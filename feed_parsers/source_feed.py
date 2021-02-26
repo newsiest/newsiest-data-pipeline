@@ -1,9 +1,9 @@
 import feedparser
 import typing
 import abc
+import traceback
 from datetime import datetime
 from models.news_article import NewsArticle
-
 
 class SourceFeed:
     """
@@ -21,7 +21,7 @@ class SourceFeed:
             feed = feedparser.parse(self.url)
 
             # Only refresh feed if it updated
-            last_updated = self.__parse_last_updated()
+            last_updated = self.__parse_last_updated(feed)
             if last_updated <= self.last_updated:
                 return []
 
@@ -34,14 +34,13 @@ class SourceFeed:
 
             # self.on_complete()
             return articles
-        except:
+        except Exception as e:
+            traceback.print_exc()
             return []
 
-    @abc.abstractmethod
     def __parse_last_updated(self, feed: feedparser) -> datetime:
         pass
 
-    @abc.abstractmethod
     def __parse_articles(self, feed: feedparser) -> [NewsArticle]:
         pass
 
