@@ -1,4 +1,3 @@
-
 from models.news_article import NewsArticle
 import feedparser
 import datetime
@@ -6,7 +5,6 @@ from dateutil import parser as date_parser
 from feed_parsers.source_feed import SourceFeed
 
 class CbcSourceFeed(SourceFeed):
-
     def _parse_last_updated(self, feed: feedparser) -> datetime:
         return date_parser.parse(feed.channel.updated)
 
@@ -21,3 +19,10 @@ class CbcSourceFeed(SourceFeed):
             ))
         return articles
 
+
+class NytSourceFeed(SourceFeed):
+    def _parse_last_updated(self, feed: feedparser) -> datetime:
+        pass
+
+    def _parse_articles(self, feed: feedparser) -> [NewsArticle]:
+        pass

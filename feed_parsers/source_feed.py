@@ -11,7 +11,6 @@ class SourceFeed:
     """
     Represents a generic rss feed
     """
-
     def __init__(self, url: str) -> None:
         eastern = pytz.timezone('US/Eastern')
         self.url = url
