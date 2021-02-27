@@ -3,7 +3,7 @@ from queue import Queue
 
 from feed_parsers.source_feed import SourceFeed
 from models.news_article import NewsArticle
-from pipeline.pipeline import PipelineStage
+from pipeline.pipeline_stage import PipelineStage
 from apscheduler.schedulers.background import BackgroundScheduler
 import threading
 
@@ -18,16 +18,16 @@ class FeedManager(PipelineStage):
 
     def start(self):
         scheduler = BackgroundScheduler()
-        scheduler.add_job(self._wait_on_queue, 'interval', seconds=1)
+        scheduler.add_job(self._wait_on_queue, 'interval', seconds=0.1)
 
-        for f in self.feeds:
+        for f in self._feeds:
             scheduler.add_job(
                 lambda: self._start_feed_thread(f),
                 'interval',
                 seconds=5
             )
-
         scheduler.start()
+
 
     def _enqueue_one(self, article: NewsArticle):
         pass
@@ -43,6 +43,6 @@ class FeedManager(PipelineStage):
     @staticmethod
     def _start_feed(feed: SourceFeed, queue: Queue):
         articles = feed.fetch()
-        for a in articles:
-            queue.put(a)
-
+        if(articles):
+            for a in articles:
+                queue.put(a)
