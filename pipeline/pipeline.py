@@ -7,9 +7,15 @@ from models.news_article import NewsArticle
 
 class PipelineStage:
 
-    @abstractmethod
-    def on_emit(self, callback: Callable[[NewsArticle], None]):
-        pass
+    def __init__(self):
+        self._listeners: [Callable[[NewsArticle], None]] = []
+
+    def register_listener(self, callback: Callable[[NewsArticle], None]):
+        self.listeners.append(callback)
+
+    def emit(self, to_emit: NewsArticle):
+        for l in self._listeners:
+            l(to_emit)
 
     @abstractmethod
     def _enqueue_one(self, article: NewsArticle):
