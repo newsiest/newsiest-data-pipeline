@@ -1,5 +1,6 @@
 from queue import Queue
 
+# TODO delete
 class QueueManager:
     def __init__(self):
         self._to_tag_q: Queue = Queue()

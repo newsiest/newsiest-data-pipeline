@@ -4,6 +4,7 @@ import datetime
 from dateutil import parser as date_parser
 from feed_parsers.source_feed import SourceFeed
 
+
 class CbcSourceFeed(SourceFeed):
     def _parse_last_updated(self, feed: feedparser) -> datetime:
         return date_parser.parse(feed.channel.updated)
@@ -12,10 +13,10 @@ class CbcSourceFeed(SourceFeed):
         articles = []
         for e in feed.entries:
             articles.append(NewsArticle(
-                title = e.title,
-                author = e.author if e.author else 'CBC News',
-                url = e.links[0].href,
-                pub_date = date_parser.parse(e.published)
+                title=e.title,
+                author=e.author if e.author else 'CBC News',
+                url=e.links[0].href,
+                pub_date=date_parser.parse(e.published)
             ))
         return articles
 
