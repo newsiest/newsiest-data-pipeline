@@ -1,3 +1,5 @@
+import sys
+from concurrent.futures import thread
 from typing import Callable
 from queue import Queue
 
@@ -33,7 +35,7 @@ class FeedManager(PipelineStage):
         pass
 
     def _wait_on_queue(self):
-        if(not self._queue.empty()):
+        while(not self._queue.empty()):
             self.emit(self._queue.get())
 
     def _start_feed_thread(self, feed: SourceFeed):
@@ -46,3 +48,6 @@ class FeedManager(PipelineStage):
         if(articles):
             for a in articles:
                 queue.put(a)
+
+        sys.exit()
+        print("test")
