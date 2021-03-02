@@ -1,4 +1,5 @@
 import logging
+import os
 import threading
 from datetime import time
 
@@ -18,8 +19,8 @@ if __name__ == '__main__':
     # a = (cbc.fetch())
     feeds = [cbc, cbc2]
 
-    # for i in range(60):
-    #     feeds.append(CbcSourceFeed(url='https://rss.cbc.ca/lineup/canada.xml', tag=str(i)))
+    for i in range(300):
+        feeds.append(CbcSourceFeed(url='https://rss.cbc.ca/lineup/canada.xml', tag=str(i)))
 
     # logging.basicConfig(level=logging.DEBUG)
     pipeline = Pipeline(feeds=feeds)
@@ -29,5 +30,5 @@ if __name__ == '__main__':
     # t.start()
     # t.join()
 
-
+    print(os.getpid())
     while 1:1

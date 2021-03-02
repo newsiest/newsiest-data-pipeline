@@ -10,6 +10,7 @@ from pipeline.pipeline_stage import PipelineStage
 from apscheduler.schedulers.background import BackgroundScheduler
 import threading
 import logging
+import os
 
 FREQUENCY = 10
 
@@ -29,9 +30,9 @@ class FeedManager(PipelineStage):
             scheduler.add_job(
                 self._start_feed_thread,
                 'interval',
-                seconds=3,
-                args=(f,)
-                # jitter=5
+                seconds=5,
+                args=(f,),
+                jitter=5
             )
 
 
