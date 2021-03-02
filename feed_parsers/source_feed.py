@@ -11,11 +11,12 @@ class SourceFeed:
     """
     Represents a generic rss feed
     """
-    def __init__(self, url: str) -> None:
+    def __init__(self, url: str, tag: str=None) -> None:
         eastern = pytz.timezone('US/Eastern')
         self.url = url
         self.last_updated: datetime = datetime(1971, 1, 1, tzinfo=eastern)
         self.top_article_date: datetime = datetime(1971, 1, 1, tzinfo=eastern)
+        self.tag = tag
         # self.on_complete = on_complete
 
     def fetch(self) -> [NewsArticle]:

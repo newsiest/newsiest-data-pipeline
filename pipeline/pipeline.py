@@ -10,7 +10,8 @@ class Pipeline:
         self.feed_manager.register_listener(self.pr)
 
     def pr(self, article: NewsArticle):
-        print(article)
+        # print(article)
+        pass
 
     def start(self):
         self.feed_manager.start()

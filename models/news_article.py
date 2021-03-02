@@ -1,4 +1,5 @@
 import datetime
+import jsonpickle
 
 class NewsArticle:
     def __init__(self, title: str = None, author: str = None, url: str = None, img_url: str = None, pub_date: datetime = None):
@@ -9,4 +10,5 @@ class NewsArticle:
         self.pub_date = pub_date
 
     def __str__(self):
+        # return jsonpickle.encode(self)
         return self.title
