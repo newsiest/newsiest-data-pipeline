@@ -27,12 +27,16 @@ class FeedManager(PipelineStage):
 
         scheduler.start()
         for f in self._feeds:
+            self._start_feed_thread(f)
+
+        for f in self._feeds:
+            self._start_feed_thread(f)
             scheduler.add_job(
                 self._start_feed_thread,
                 'interval',
-                seconds=5,
+                seconds=60,
                 args=(f,),
-                jitter=5
+                jitter=60
             )
 
 
