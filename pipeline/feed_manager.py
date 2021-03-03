@@ -25,10 +25,15 @@ class FeedManager(PipelineStage):
         scheduler = BackgroundScheduler()
         scheduler.add_job(self._wait_on_queue, 'interval', seconds=0.1)
 
-        scheduler.start()
+        # scheduler.start()
+        start = time.time()
         for f in self._feeds:
-            self._start_feed_thread(f)
+            # self._start_feed_thread(f
+            FeedManager._start_feed(f, self._queue)
 
+        print(f'Took: {time.time() - start}')
+
+        return
         for f in self._feeds:
             self._start_feed_thread(f)
             scheduler.add_job(
@@ -60,9 +65,9 @@ class FeedManager(PipelineStage):
             for a in articles:
                 queue.put(a)
 
-        print(f'Fetched from {feed.url} tag {feed.tag}, found {len(articles) if articles else 0}')
+        # print(f'Fetched from {feed.url} tag {feed.tag}, found {len(articles) if articles else 0}')
 
         # time.sleep(10)
         # print(time.time() - start)
-        sys.exit()
-        print("test")
+        # sys.exit()
+        # print("test")
