@@ -30,12 +30,11 @@ class SourceFeed:
 
             # Only get new articles
             articles = list(filter(lambda art: art.pub_date >= self.top_article_date,
-                                   self._parse_articles(feed)))  # TODO use bisect to improve performance
+                                   self._parse_articles(feed)))  or [] # TODO use bisect to improve performance
 
             self.last_updated = last_updated
             self.top_article_date = articles[0].pub_date
 
-            # self.on_complete()
             return articles
         except Exception as e:
             traceback.print_exc()

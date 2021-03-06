@@ -16,12 +16,11 @@ class PipelineStage:
         for l in self._listeners:
             l(to_emit)
 
-    @abstractmethod
-    def _enqueue_one(self, article: NewsArticle):
-        pass
+    # TODO add type hints
+    def process(self, to_process: []):
+        self.emit(self._process_one(x) for x in to_process)
 
-    def enqueue(self, article):
-        if (isinstance(article, list)):
-            [self._enqueue_one(x) for x in article]
-        else:
-            self._enqueue_one(article)
+    @abstractmethod
+    def _process_one(self, to_process):
+        raise NotImplementedError()
+

@@ -18,56 +18,18 @@ class FeedManager(PipelineStage):
 
     def __init__(self, feeds: [SourceFeed]):
         super().__init__()
-        self._queue = Queue()
         self._feeds = feeds
 
     def start(self):
-        scheduler = BackgroundScheduler()
-        scheduler.add_job(self._wait_on_queue, 'interval', seconds=0.1)
-
-        # scheduler.start()
         start = time.time()
+        articles = []
+
         for f in self._feeds:
-            # self._start_feed_thread(f
-            FeedManager._start_feed(f, self._queue)
+            articles += f.fetch()
 
         print(f'Took: {time.time() - start}')
+        self.emit(articles)
 
-        return
-        for f in self._feeds:
-            self._start_feed_thread(f)
-            scheduler.add_job(
-                self._start_feed_thread,
-                'interval',
-                seconds=60,
-                args=(f,),
-                jitter=60
-            )
+    def _process_one(self, to_process):
+        raise NotImplementedError
 
-
-    def _enqueue_one(self, article: NewsArticle):
-        pass
-
-    def _wait_on_queue(self):
-        while(not self._queue.empty()):
-            self.emit(self._queue.get())
-
-    def _start_feed_thread(self, feed: SourceFeed):
-        t = threading.Thread(target=FeedManager._start_feed, args=(feed, self._queue))
-        t.start()
-        # t.join()
-
-    @staticmethod
-    def _start_feed(feed: SourceFeed, queue: Queue):
-        start = time.time()
-        articles = feed.fetch()
-        if(articles):
-            for a in articles:
-                queue.put(a)
-
-        # print(f'Fetched from {feed.url} tag {feed.tag}, found {len(articles) if articles else 0}')
-
-        # time.sleep(10)
-        # print(time.time() - start)
-        # sys.exit()
-        # print("test")
