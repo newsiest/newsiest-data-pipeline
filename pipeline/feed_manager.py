@@ -1,18 +1,7 @@
-import sys
-from concurrent.futures import thread
 import time
-from typing import Callable
-from queue import Queue
-
 from feed_parsers.source_feed import SourceFeed
-from models.news_article import NewsArticle
 from pipeline.pipeline_stage import PipelineStage
-from apscheduler.schedulers.background import BackgroundScheduler
-import threading
-import logging
-import os
 
-FREQUENCY = 10
 
 class FeedManager(PipelineStage):
 

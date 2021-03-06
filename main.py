@@ -19,7 +19,7 @@ if __name__ == '__main__':
     # a = (cbc.fetch())
     feeds = [cbc, cbc2]
 
-    for i in range(300):
+    for i in range(1):
         feeds.append(CbcSourceFeed(url='https://rss.cbc.ca/lineup/canada.xml', tag=str(i)))
 
     # logging.basicConfig(level=logging.DEBUG)

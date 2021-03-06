@@ -9,8 +9,8 @@ class Pipeline:
         self.feed_manager = FeedManager(feeds)
         self.feed_manager.register_listener(self.pr)
 
-    def pr(self, article: NewsArticle):
-        # print(article)
+    def pr(self, articles: [NewsArticle]):
+        [print(x) for x in articles]
         pass
 
     def start(self):
