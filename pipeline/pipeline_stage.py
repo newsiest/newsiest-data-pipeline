@@ -5,18 +5,28 @@ from models.news_article import NewsArticle
 
 
 class PipelineStage:
+    """
+    A singular stage in the data pipeline
 
+    Contains a list of listeners that are called upon stage completion
+    """
     def __init__(self):
         self._listeners: [Callable[[NewsArticle], None]] = []
 
     def register_listener(self, callback: Callable[[NewsArticle], None]):
+        """
+        :param callback: A function that is called when this stage completes
+        """
         self._listeners.append(callback)
 
-    def emit(self, to_emit: NewsArticle):
+    def emit(self, to_emit: [NewsArticle]):
+        """
+        Calls all listeners, signifying termination of this stage
+        """
         for l in self._listeners:
             l(to_emit)
 
-    # TODO add type hints
+
     def process(self, to_process: []):
         self.emit(self._process_one(x) for x in to_process)
 

@@ -1,3 +1,5 @@
+from abc import abstractmethod
+
 import feedparser
 
 import pytz
@@ -10,6 +12,8 @@ from models.news_article import NewsArticle
 class SourceFeed:
     """
     Represents a generic rss feed
+
+    Extend this class for each feed source/format
     """
     def __init__(self, url: str, tag: str=None) -> None:
         eastern = pytz.timezone('US/Eastern')
@@ -17,7 +21,6 @@ class SourceFeed:
         self.last_updated: datetime = datetime(1971, 1, 1, tzinfo=eastern)
         self.top_article_date: datetime = datetime(1971, 1, 1, tzinfo=eastern)
         self.tag = tag
-        # self.on_complete = on_complete
 
     def fetch(self) -> [NewsArticle]:
         try:
@@ -40,8 +43,10 @@ class SourceFeed:
             traceback.print_exc()
             return []
 
+    @abstractmethod
     def _parse_last_updated(self, feed: feedparser) -> datetime:
         raise NotImplementedError
 
+    @abstractmethod
     def _parse_articles(self, feed: feedparser) -> [NewsArticle]:
         raise NotImplementedError

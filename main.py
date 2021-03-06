@@ -31,4 +31,3 @@ if __name__ == '__main__':
     # t.join()
 
     print('===========' + str(os.getpid()))
-    while 1:1

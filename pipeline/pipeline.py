@@ -4,6 +4,10 @@ from pipeline.feed_manager import FeedManager
 
 
 class Pipeline:
+    """
+    Represents the ETL pipeline cumulatively, aggregating all stages
+    """
+
     def __init__(self, feeds: [SourceFeed]):
         # self.feeds = feeds
         self.feed_manager = FeedManager(feeds)
