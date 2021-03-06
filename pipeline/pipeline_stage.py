@@ -27,10 +27,10 @@ class PipelineStage:
             l(to_emit)
 
 
-    def process(self, to_process: []):
+    def process(self, to_process: [NewsArticle]):
         self.emit(self._process_one(x) for x in to_process)
 
     @abstractmethod
-    def _process_one(self, to_process):
+    def _process_one(self, to_process: NewsArticle):
         raise NotImplementedError()
 
