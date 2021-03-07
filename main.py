@@ -1,19 +1,27 @@
-import logging
+import yaml
 import os
-import threading
 from datetime import time
 
 from feed_parsers.implemented_feeds import CbcSourceFeed
 from pipeline.pipeline import Pipeline
 
-def test():
-    time.sleep(2)
-    print("done")
-    import sys
-    sys.exit()
+
+SOURCE_CLASSES = {
+    'cbc': CbcSourceFeed
+}
+
+def load_feeds(file_name: str):
+    with open(file_name, 'r') as file:
+        data = yaml.load(file, Loader=yaml.FullLoader)
+        print(data)
+        for source in data:
+
+
+            pass
 
 
 if __name__ == '__main__':
+    load_feeds('feeds.yaml')
     cbc = CbcSourceFeed(url='https://www.cbc.ca/cmlink/rss-topstories', tag='cbc1')
     cbc2 = CbcSourceFeed(url='https://rss.cbc.ca/lineup/canada.xml', tag='cbc2')
     # a = (cbc.fetch())
@@ -26,8 +34,3 @@ if __name__ == '__main__':
     pipeline = Pipeline(feeds=feeds)
     pipeline.start()
 
-    # t = threading.Thread(target=test)
-    # t.start()
-    # t.join()
-
-    print('===========' + str(os.getpid()))
