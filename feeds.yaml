@@ -1,0 +1,4 @@
+---
+- cbc:
+    - https://www.cbc.ca/cmlink/rss-topstories'
+    - https://rss.cbc.ca/lineup/canada.xml
