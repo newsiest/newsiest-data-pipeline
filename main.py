@@ -10,6 +10,7 @@ from feed_parsers.implemented_feeds import CbcSourceFeed
 from feed_parsers.source_feed import SourceFeed
 from pipeline.feed_manager import FeedManager
 from pipeline.pipeline import Pipeline
+from pipeline.tagger import Tagger
 
 SOURCE_CLASSES = {
     'cbc': CbcSourceFeed
@@ -47,7 +48,8 @@ if __name__ == '__main__':
 
     Pipeline(
         stages = [
-            FeedManager(feeds=feeds)
+            FeedManager(feeds=feeds),
+            Tagger()
         ],
         print_articles = not os.getenv('SUPPRESS_PRINT')
     ).start()
