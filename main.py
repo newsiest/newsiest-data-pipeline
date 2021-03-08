@@ -5,6 +5,7 @@ from datetime import time
 from feed_parsers.implemented_feeds import CbcSourceFeed
 from pipeline.feed_manager import FeedManager
 from pipeline.pipeline import Pipeline
+from pipeline.tagger import Tagger
 
 
 SOURCE_CLASSES = {
@@ -33,7 +34,8 @@ if __name__ == '__main__':
 
     # logging.basicConfig(level=logging.DEBUG)
     pipeline = Pipeline(stages=[
-        FeedManager(feeds=feeds)
+        FeedManager(feeds=feeds),
+        Tagger()
     ])
     pipeline.start()
 
