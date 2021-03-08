@@ -19,6 +19,7 @@ class PipelineStage:
         """
         self._listeners.append(callback)
 
+
     def emit(self, to_emit: [NewsArticle]):
         """
         Calls all listeners, signifying termination of this stage
@@ -31,6 +32,15 @@ class PipelineStage:
         self.emit(self._process_one(x) for x in to_process)
 
     @abstractmethod
-    def _process_one(self, to_process: NewsArticle):
-        raise NotImplementedError()
+    def _process_one(self, to_process: NewsArticle) -> NewsArticle:
+        raise NotImplementedError
+
+    @abstractmethod
+    def start(self):
+        """
+        Force run this pipeline stage
+
+        Should only be called from first stage
+        """
+        raise NotImplementedError
 

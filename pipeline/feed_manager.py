@@ -21,4 +21,3 @@ class FeedManager(PipelineStage):
 
     def _process_one(self, to_process):
         raise NotImplementedError
-

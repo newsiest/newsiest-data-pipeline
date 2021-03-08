@@ -3,6 +3,7 @@ import os
 from datetime import time
 
 from feed_parsers.implemented_feeds import CbcSourceFeed
+from pipeline.feed_manager import FeedManager
 from pipeline.pipeline import Pipeline
 
 
@@ -31,6 +32,8 @@ if __name__ == '__main__':
         feeds.append(CbcSourceFeed(url='https://rss.cbc.ca/lineup/canada.xml', tag=str(i)))
 
     # logging.basicConfig(level=logging.DEBUG)
-    pipeline = Pipeline(feeds=feeds)
+    pipeline = Pipeline(stages=[
+        FeedManager(feeds=feeds)
+    ])
     pipeline.start()
 
