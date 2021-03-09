@@ -22,7 +22,7 @@ class PipelineStage:
 
     def emit(self, to_emit: [NewsArticle]):
         """
-        Calls all listeners, signifying termination of this stage
+        Call all listeners, signifying termination of this stage
         """
         for l in self._listeners:
             l(to_emit)

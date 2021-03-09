@@ -16,7 +16,7 @@ class FeedManager(PipelineStage):
         for f in self._feeds:
             articles += f.fetch()
 
-        print(f'Took: {time.time() - start}')
+        print(f'Took: {time.time() - start}, Found: {len(articles)} new articles')
         self.emit(articles)
 
     def _process_one(self, to_process):

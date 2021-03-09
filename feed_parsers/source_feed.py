@@ -15,10 +15,10 @@ class SourceFeed:
 
     Extend this class for each feed source/format
     """
-    def __init__(self, url: str, tag: str=None) -> None:
+    def __init__(self, url: str, tag: str=None, last_updated=None) -> None:
         eastern = pytz.timezone('US/Eastern')
         self.url = url
-        self.last_updated: datetime = datetime(1971, 1, 1, tzinfo=eastern)
+        self.last_updated: datetime = last_updated or datetime(1971, 1, 1, tzinfo=eastern)
         self.top_article_date: datetime = datetime(1971, 1, 1, tzinfo=eastern)
         self.tag = tag
 
@@ -32,7 +32,7 @@ class SourceFeed:
                 return
 
             # Only get new articles
-            articles = list(filter(lambda art: art.pub_date >= self.top_article_date,
+            articles = list(filter(lambda art: art.pub_date >= self.last_updated,
                                    self._parse_articles(feed)))  or [] # TODO use bisect to improve performance
 
             self.last_updated = last_updated
