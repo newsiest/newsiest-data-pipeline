@@ -28,8 +28,7 @@ def unpack_args(args: [str]) -> str:
     """
     Load date from command line args
     """
-    print(args)
-    return date_parser.parse(args[1]) if len(args) > 1 else None
+    return date_parser.parse(args[1]) if len(args) > 1 and args[1] != '' else None
 
 if __name__ == '__main__':
     last_run_date = unpack_args(sys.argv)

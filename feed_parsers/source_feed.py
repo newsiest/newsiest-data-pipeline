@@ -29,7 +29,7 @@ class SourceFeed:
             # Only refresh feed if it updated
             last_updated = self._parse_last_updated(feed)
             if last_updated <= self.last_updated:
-                return
+                return []
 
             # Only get new articles
             articles = list(filter(lambda art: art.pub_date >= self.last_updated,
