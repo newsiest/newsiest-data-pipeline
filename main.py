@@ -42,7 +42,7 @@ if __name__ == '__main__':
     last_run_date = unpack_args(sys.argv)
     logging.info(f'Last Run at: {last_run_date}')
 
-    feeds = load_feeds('feeds.yaml', last_run_date)
+    feeds = load_feeds('feeds.yml', last_run_date)
     logging.info(f'Loading ({len(feeds)}) feeds...')
 
     Pipeline(
