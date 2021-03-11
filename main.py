@@ -40,7 +40,6 @@ if __name__ == '__main__':
 
     logging.info('Woken up')
     last_run_date = unpack_args(sys.argv)
-
     logging.info(f'Last Run at: {last_run_date}')
 
     feeds = load_feeds('feeds.yaml', last_run_date)
