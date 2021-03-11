@@ -1,7 +1,10 @@
+import os
 from datetime import datetime
+import time
 import sys
 import yaml
 from dateutil import parser as date_parser
+import logging
 
 from feed_parsers.implemented_feeds import CbcSourceFeed
 from feed_parsers.source_feed import SourceFeed
@@ -31,9 +34,24 @@ def unpack_args(args: [str]) -> str:
     return date_parser.parse(args[1]) if len(args) > 1 and args[1] != '' else None
 
 if __name__ == '__main__':
+    start_time = time.time()
+    logging.basicConfig(format='[%(levelname)s] %(asctime)s - %(filename)s:%(funcName)s - %(message)s',
+                        level=logging.INFO, stream=sys.stdout)
+
+    logging.info('Woken up')
     last_run_date = unpack_args(sys.argv)
+
+    logging.info(f'Last Run at: {last_run_date}')
+
     feeds = load_feeds('feeds.yaml', last_run_date)
-    Pipeline(stages=[
-        FeedManager(feeds=feeds)
-    ]).start()
+    logging.info(f'Loading ({len(feeds)}) feeds...')
+
+    Pipeline(
+        stages = [
+            FeedManager(feeds=feeds)
+        ],
+        print_articles = not os.getenv('SUPPRESS_PRINT')
+    ).start()
+
+    logging.info(f'Shutting down, total execution time: {time.time()- start_time}s')
 

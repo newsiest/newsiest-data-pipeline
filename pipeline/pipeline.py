@@ -1,3 +1,5 @@
+import logging
+
 from feed_parsers.source_feed import SourceFeed
 from models.news_article import NewsArticle
 from pipeline.feed_manager import FeedManager
@@ -8,14 +10,16 @@ class Pipeline:
     """
     Represents the ETL pipeline cumulatively, aggregating all stages
     """
-    def __init__(self, stages: [PipelineStage]):
+    def __init__(self, stages: [PipelineStage], print_articles: bool = False):
         """
-        :param stages: PipelinStages in order of desired execution
+        :param stages: PipelineStages in order of desired execution
+        :param print_articles: print article titles as they appear
         """
         self.stages: PipelineStage = stages
+        self.print_articles = print_articles
 
-    def pr(self, articles: [NewsArticle]):
-        [print(x) for x in articles]
+    def print_titles(self, articles: [NewsArticle]):
+        [print(f'\t{x}') for x in articles]
 
     def _chain_feeds(self):
         """
@@ -24,11 +28,13 @@ class Pipeline:
         for i in range(1, len(self.stages)):
             self.stages[i-1].register_listener(self.stages[i].process)
 
-        self.stages[-1].register_listener(self.pr) # TODO remove
+        if(self.print_articles):
+            self.stages[-1].register_listener(self.print_titles)
 
     def start(self):
         """
         Begin the pipeline
         """
+        logging.info("Starting pipeline...")
         self._chain_feeds()
         self.stages[0].start()
