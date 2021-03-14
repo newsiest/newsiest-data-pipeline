@@ -12,6 +12,7 @@ from pipeline.feed_manager import FeedManager
 from pipeline.pipeline import Pipeline
 from pipeline.tagger import Tagger
 
+
 SOURCE_CLASSES = {
     'cbc': CbcSourceFeed
 }
