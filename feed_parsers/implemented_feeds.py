@@ -1,3 +1,4 @@
+import regex
 from models.news_article import NewsArticle
 import feedparser
 import datetime
@@ -12,11 +13,17 @@ class CbcSourceFeed(SourceFeed):
     def _parse_articles(self, feed: feedparser) -> [NewsArticle]:
         articles = []
         for e in feed.entries:
+            desc_title = regex.search('(?<=title=[\'"])([\s\w.,:!?\\\/-]*)', e.description)
+            desc_title = desc_title.group(0) if desc_title else ''
+
+            desc_para = regex.search('(?<=<p>)(.*?)(?=<\/p>)', e.description).group(0)
+
             articles.append(NewsArticle(
                 title=e.title,
                 author=e.author if e.author else 'CBC News',
                 url=e.links[0].href,
-                pub_date=date_parser.parse(e.published)
+                pub_date=date_parser.parse(e.published),
+                desc=desc_title + desc_para
             ))
         return articles
 
