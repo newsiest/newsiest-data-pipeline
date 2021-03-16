@@ -21,7 +21,7 @@ class Tagger(PipelineStage):
 
         # rake
         self.r.extract_keywords_from_text(text)
-        rakes = set(self.r.get_ranked_phrases())
+        rakes = self.r.get_ranked_phrases()
 
         # spacy
         result = []
@@ -36,7 +36,9 @@ class Tagger(PipelineStage):
 
         spacys = [x[0] for x in Counter(result).most_common()]
 
-        # print(to_process.title, rakes, spacys)
+        to_process.tags = list(set(rakes + spacys))
+
+        print(to_process.title, to_process.tags)
         # print(to_process.title, list(rakes.intersection(spacys)))
 
     def start(self):
