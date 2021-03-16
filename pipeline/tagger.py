@@ -38,5 +38,7 @@ class Tagger(PipelineStage):
 
         to_process.tags = list(set(rakes + spacys))
 
+        return to_process
+
     def start(self):
         pass
