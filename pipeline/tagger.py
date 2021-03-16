@@ -38,8 +38,5 @@ class Tagger(PipelineStage):
 
         to_process.tags = list(set(rakes + spacys))
 
-        print(to_process.title, to_process.tags)
-        # print(to_process.title, list(rakes.intersection(spacys)))
-
     def start(self):
         pass
