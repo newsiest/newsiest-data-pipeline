@@ -8,12 +8,11 @@ from pipeline.pipeline_stage import PipelineStage
 
 
 class Tagger(PipelineStage):
+    nlp = spacy.load("en_core_web_md")
+    pos_tag = ['PROPN', 'NOUN']
 
     def __init__(self):
         super().__init__()
-        self.nlp = spacy.load("en_core_web_md")
-        self.pos_tag = ['PROPN', 'NOUN']
-
         self.r = Rake(max_length=1)
 
     def _process_one(self, to_process):
