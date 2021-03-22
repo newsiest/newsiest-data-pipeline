@@ -4,6 +4,7 @@ from string import punctuation
 from rake_nltk import Rake
 import spacy
 
+from models.news_article import NewsArticle
 from pipeline.pipeline_stage import PipelineStage
 
 
@@ -11,11 +12,17 @@ class Tagger(PipelineStage):
     nlp = spacy.load("en_core_web_md")
     pos_tag = ['PROPN', 'NOUN']
 
-    def __init__(self):
+    def __init__(self, rake_max_length: int = 1):
+        """
+        Initialize Rake algorithm
+        """
         super().__init__()
-        self.r = Rake(max_length=1)
+        self.r = Rake(max_length=rake_max_length)
 
-    def _process_one(self, to_process):
+    def _process_one(self, to_process: NewsArticle) -> NewsArticle:
+        """
+        Generate tags using the Rake algorithm and spaCy's POS extraction
+        """
         text = (to_process.title + to_process.desc).lower()
 
         # rake
