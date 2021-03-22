@@ -40,4 +40,4 @@ class Tagger(PipelineStage):
         return to_process
 
     def start(self):
-        pass
+        raise NotImplementedError
