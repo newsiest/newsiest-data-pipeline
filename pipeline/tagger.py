@@ -23,7 +23,7 @@ class Tagger(PipelineStage):
         """
         Generate tags using the Rake algorithm and spaCy's POS extraction
         """
-        text = (to_process.title + to_process.desc).lower()
+        text = (to_process.title + to_process.desc_title + to_process.desc_para).lower()
 
         # rake
         self.r.extract_keywords_from_text(text)

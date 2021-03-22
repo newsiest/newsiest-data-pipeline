@@ -23,7 +23,8 @@ class CbcSourceFeed(SourceFeed):
                 author=e.author if e.author else 'CBC News',
                 url=e.links[0].href,
                 pub_date=date_parser.parse(e.published),
-                desc=desc_title + desc_para
+                desc_title=desc_title,
+                desc_para=desc_para
             ))
         return articles
 
