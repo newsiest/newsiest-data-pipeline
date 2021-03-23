@@ -9,6 +9,7 @@ import logging
 from feed_parsers.implemented_feeds import CbcSourceFeed
 from feed_parsers.source_feed import SourceFeed
 from pipeline.feed_manager import FeedManager
+from pipeline.export_manager import ExportManager
 from pipeline.pipeline import Pipeline
 
 SOURCE_CLASSES = {
@@ -47,7 +48,8 @@ if __name__ == '__main__':
 
     Pipeline(
         stages = [
-            FeedManager(feeds=feeds)
+            FeedManager(feeds=feeds),
+            ExportManager()
         ],
         print_articles = not os.getenv('SUPPRESS_PRINT')
     ).start()

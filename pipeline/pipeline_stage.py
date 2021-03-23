@@ -29,7 +29,8 @@ class PipelineStage:
 
 
     def process(self, to_process: [NewsArticle]):
-        self.emit(self._process_one(x) for x in to_process)
+        self.emit([self._process_one(x) for x in to_process])
+        self._post_process()
 
     @abstractmethod
     def _process_one(self, to_process: NewsArticle) -> NewsArticle:
@@ -44,3 +45,9 @@ class PipelineStage:
         """
         raise NotImplementedError
 
+    @abstractmethod
+    def _post_process(self):
+        """
+        Perform any needed cleanup for the stage
+        """
+        raise NotImplementedError
