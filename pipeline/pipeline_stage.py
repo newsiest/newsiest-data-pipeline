@@ -50,3 +50,4 @@ class PipelineStage:
         """
         Perform any needed cleanup for the stage
         """
+        raise NotImplementedError
