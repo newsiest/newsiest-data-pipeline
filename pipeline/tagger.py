@@ -51,3 +51,6 @@ class Tagger(PipelineStage):
 
     def start(self):
         raise NotImplementedError
+
+    def _post_process(self):
+        pass
