@@ -1,6 +1,7 @@
 from collections import Counter
 from string import punctuation
 
+import nltk
 from rake_nltk import Rake
 import spacy
 
@@ -9,6 +10,8 @@ from pipeline.pipeline_stage import PipelineStage
 
 
 class Tagger(PipelineStage):
+    nltk.download('stopwords')
+    nltk.download('punkt')
     nlp = spacy.load("en_core_web_md")
     pos_tag = ['PROPN', 'NOUN']
 
