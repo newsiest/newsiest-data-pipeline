@@ -21,7 +21,8 @@ class ExportManager(PipelineStage):
         Declare the articles queue, and send the article JSON to it
         """
         self._channel.queue_declare(queue='articles')
-        self._channel.basic_publish(exchange='', routing_key='articles', body=json.dumps(to_process.__dict__, sort_keys=True, default=str))
+        body = to_process.as_dict()
+        self._channel.basic_publish(exchange='', routing_key='articles', body=json.dumps(body, sort_keys=True, default=str))
         return to_process
 
     def _post_process(self):

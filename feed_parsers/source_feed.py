@@ -6,7 +6,7 @@ import pytz
 import traceback
 from datetime import datetime
 
-from models.news_article import NewsArticle
+from models.news_article import NewsArticle, NewsSource
 
 
 class SourceFeed:
@@ -15,12 +15,15 @@ class SourceFeed:
 
     Extend this class for each feed source/format
     """
-    def __init__(self, url: str, tag: str=None, last_updated=None) -> None:
+    def __init__(self, url: str, tag: str=None, last_updated=None, source: NewsSource = None) -> None:
         eastern = pytz.timezone('US/Eastern')
-        self.url = url
         self.last_updated: datetime = last_updated or datetime(1971, 1, 1, tzinfo=eastern)
         self.top_article_date: datetime = datetime(1971, 1, 1, tzinfo=eastern)
         self.tag = tag
+        self.url = url
+
+        # Source data
+        self.source = source
 
     def fetch(self) -> [NewsArticle]:
         try:
@@ -34,6 +37,9 @@ class SourceFeed:
             # Only get new articles
             articles = list(filter(lambda art: art.pub_date >= self.last_updated,
                                    self._parse_articles(feed)))  or [] # TODO use bisect to improve performance
+
+            for a in articles:
+                a.source = self.source
 
             self.last_updated = last_updated
             self.top_article_date = articles[0].pub_date
