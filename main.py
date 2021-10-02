@@ -26,11 +26,12 @@ def load_feeds(file_name: str, last_updated: datetime) -> [SourceFeed]:
     with open(file_name, 'r') as file:
         data = yaml.load(file, Loader=yaml.FullLoader)
         for source_data in data['sources']:
-            source_obj = NewsSource(source_data['name'], source_data['logo-url'])
-            feed_cls = SOURCE_CLASSES[source_data['parser']] if source_data['parser'] in SOURCE_CLASSES \
-                else DefaultSourceFeed
 
-            feeds += [feed_cls(url=url, last_updated=last_updated) for url in source_data['feeds']]
+            source_obj = NewsSource(source_data['name'], source_data['logo-url'])
+            feed_cls = SOURCE_CLASSES[source_data['parser']] if 'parser' in source_data and \
+                    source_data['parser'] in SOURCE_CLASSES else DefaultSourceFeed
+
+            feeds += [feed_cls(url=url, last_updated=last_updated, source=source_obj) for url in source_data['feeds']]
 
     return feeds
 

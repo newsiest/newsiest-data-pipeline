@@ -40,6 +40,10 @@ class DefaultSourceFeed(SourceFeed):
         return date_parser.parse(feed.channel.updated)
 
     def _parse_articles(self, feed: feedparser) -> [NewsArticle]:
+
+        if not self.source:
+            self.source = NewsSource(name=feed.title)
+
         articles = []
         for e in feed.entries:
             try:
@@ -59,7 +63,7 @@ class DefaultSourceFeed(SourceFeed):
     def _parse_one_img_url(self, obj) -> str:
         if 'media_thumbnail' in obj:
             return obj['media_thumbnail']
-        elif len(obj.links > 1):
+        elif len(obj.links) > 1:
             return obj.links[1]
         else:
             return None

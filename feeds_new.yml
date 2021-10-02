@@ -7,5 +7,14 @@ sources:
       - https://www.cbc.ca/cmlink/rss-topstories
       - https://rss.cbc.ca/lineup/canada.xml
 
+  - name: CTV News
+    logo-url: https://www.ctvnews.ca/polopoly_fs/1.822009!/image/image.jpg
+    feeds:
+      - http://ctvnews.ca/rss/TopStories
+
+  - name: The Globe and Mail
+    logo-url: https://www.theglobeandmail.com/legacy/static/mobile.flag.rss.png
+    feeds:
+      - https://www.theglobeandmail.com/rss/section/canada/
 infer:
   -
