@@ -1,0 +1,11 @@
+sources:
+  - name: CBC News
+    slug: cbc
+    logo-url: none
+    parser: cbc
+    feeds:
+      - https://www.cbc.ca/cmlink/rss-topstories
+      - https://rss.cbc.ca/lineup/canada.xml
+
+infer:
+  -
