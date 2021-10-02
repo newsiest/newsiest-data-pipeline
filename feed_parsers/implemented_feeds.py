@@ -39,13 +39,17 @@ class DefaultSourceFeed(SourceFeed):
     def _parse_last_updated(self, feed: feedparser) -> datetime:
         return date_parser.parse(feed.channel.updated)
 
-    def _parse_articles(self, feed: feedparser) -> [NewsArticle]:
+    def _parse_articles(self, feed_dict: feedparser) -> [NewsArticle]:
 
         if not self.source:
-            self.source = NewsSource(name=feed.title)
+            self.source = NewsSource(name=feed_dict.title)
+
+        if not self.source.logo_url:
+            if 'image' in feed_dict.feed:
+                self.source.logo_url = feed_dict.feed['image'].href
 
         articles = []
-        for e in feed.entries:
+        for e in feed_dict.entries:
             try:
                 articles.append(NewsArticle(
                     title=e.title,
@@ -64,7 +68,7 @@ class DefaultSourceFeed(SourceFeed):
         if 'media_thumbnail' in obj:
             return obj['media_thumbnail']
         elif len(obj.links) > 1:
-            return obj.links[1]
+            return obj.links[1].href
         else:
             return None
 
