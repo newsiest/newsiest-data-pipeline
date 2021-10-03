@@ -1,3 +1,4 @@
+import logging
 from abc import abstractmethod
 
 import feedparser
@@ -30,7 +31,7 @@ class SourceFeed:
 
             # Only refresh feed if it updated
             last_updated = self._parse_last_updated(feed)
-            if last_updated <= self.last_updated:
+            if last_updated and last_updated <= self.last_updated:
                 return []
 
             # Only get new articles
@@ -42,6 +43,7 @@ class SourceFeed:
 
             return articles
         except Exception as e:
+            logging.error(f'Error with feed {feed.url}')
             traceback.print_exc()
             return []
 

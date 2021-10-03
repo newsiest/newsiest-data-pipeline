@@ -39,8 +39,42 @@ sources:
       - https://toronto.citynews.ca/feed/
       - https://winnipeg.citynews.ca/feed/
 
+  - name: Macleans
+    feeds:
+      - https://www.macleans.ca/feed/
+
+  - name: Canadian Business
+    feeds:
+      - https://www.canadianbusiness.com/feed/
+
+  - name: Times Colonist
+    feeds:
+      - https://www.timescolonist.com/cmlink/bc-rss-1.757
+
+#  - name: The Waterloo Record
+#    logo-url: https://www.therecord.com/favicon-therecord-144.png
+#    feeds:
+#      - https://rss.metroland.com/15/article/waterlooregion
 
 infer:
   - https://vancouversun.com/feed?x=1
   - https://www.660citynews.com/feed/
   - https://www.citynews1130.com/feed/
+  - https://montrealgazette.com/feed
+  - https://calgaryherald.com/feed
+  - https://ottawacitizen.com/feed
+  - https://www.straight.com/content/rss
+  - https://windsorstar.com/feed
+  - https://theprovince.com/feed
+  - https://o.canada.com/feed
+  - https://ottawasun.com/feed
+  - https://thestarphoenix.com/feed
+  - https://leaderpost.com/feed
+  - https://edmontonsun.com/feed
+#  - https://www.nationalobserver.com/front/rss # Issue with offsets
+  - https://calgarysun.com/feed
+  - http://www.vicnews.com/feed/
+  - http://www.abbynews.com/feed/
+  - https://ygknews.ca/feed/
+  - https://paherald.sk.ca/feed/
+  - http://www.kelownacapnews.com/feed/

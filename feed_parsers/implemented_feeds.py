@@ -1,3 +1,4 @@
+import logging
 import traceback
 from abc import ABC
 
@@ -37,7 +38,17 @@ class NytSourceFeed(SourceFeed):
 class DefaultSourceFeed(SourceFeed):
 
     def _parse_last_updated(self, feed: feedparser) -> datetime:
-        return date_parser.parse(feed.channel.updated)
+        if 'updated' in feed:
+            return date_parser.parse(feed.updated)
+        elif 'channel' in feed and 'updated' in feed.channel:
+            return date_parser.parse(feed.channel.updated)
+        else:
+            logging.error(f'{feed.url} has no last updated val!')
+            return None
+
+    def _feed_has_updated(self, feed):
+        last_updated = self._parse_last_updated(feed)
+        return last_updated and last_updated > self.last_updated
 
     def _parse_articles(self, feed_dict: feedparser) -> [NewsArticle]:
 
@@ -56,7 +67,7 @@ class DefaultSourceFeed(SourceFeed):
             try:
                 articles.append(NewsArticle(
                     title=e.title,
-                    author=e.author if e.author else self.source.name,
+                    author=e.author if 'author' in e and e.author else self.source.name,
                     url=e.link,
                     pub_date=date_parser.parse(e.published),
                     source=self.source,
