@@ -42,7 +42,7 @@ class DefaultSourceFeed(SourceFeed):
     def _parse_articles(self, feed_dict: feedparser) -> [NewsArticle]:
 
         if not self.source:
-            self.source = NewsSource(name=feed_dict.title)
+            self.source = NewsSource(name=feed_dict.feed.title)
 
         if not self.source.logo_url:
             icon = get_favicon(feed_dict.url)

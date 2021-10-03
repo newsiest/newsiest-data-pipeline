@@ -13,6 +13,7 @@ sources:
   - name: The Globe and Mail
     feeds:
       - https://www.theglobeandmail.com/rss/section/canada/
+      - https://www.theglobeandmail.com/rss/section/world/
 
   - name: Toronto Star
     feeds:
@@ -31,6 +32,15 @@ sources:
     feeds:
       - http://feeds.feedburner.com/FP_TopStories
 
+  - name: City News
+    feeds:
+      - https://edmonton.citynews.ca/feed/
+      - https://montreal.citynews.ca/feed/
+      - https://toronto.citynews.ca/feed/
+      - https://winnipeg.citynews.ca/feed/
+
 
 infer:
-  -
+  - https://vancouversun.com/feed?x=1
+  - https://www.660citynews.com/feed/
+  - https://www.citynews1130.com/feed/
