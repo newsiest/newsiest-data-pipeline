@@ -27,10 +27,9 @@ def load_feeds(file_name: str, last_updated: datetime) -> [SourceFeed]:
         data = yaml.load(file, Loader=yaml.FullLoader)
         for source_data in data['sources']:
 
+            logo_url = None
             if 'logo-url' in source_data:
                 logo_url = source_data['logo-url']
-            else:
-                logo_url = None
 
             source_obj = NewsSource(source_data['name'], logo_url=logo_url)
             feed_cls = SOURCE_CLASSES[source_data['parser']] if 'parser' in source_data and \

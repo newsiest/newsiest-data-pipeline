@@ -19,7 +19,7 @@ class Pipeline:
         self.print_articles = print_articles
 
     def print_titles(self, articles: [NewsArticle]):
-        [print(f'\t{x.source.name, x.img_url}') for x in articles]
+        [print(f'\t{x.title[:25], x.url, x.source.logo_url, x.img_url}') for x in articles]
 
     def _chain_feeds(self):
         """

@@ -6,7 +6,7 @@ import feedparser
 import datetime
 from dateutil import parser as date_parser
 from feed_parsers.source_feed import SourceFeed
-
+from cache_util import get_favicon
 
 class CbcSourceFeed(SourceFeed):
 
@@ -45,7 +45,10 @@ class DefaultSourceFeed(SourceFeed):
             self.source = NewsSource(name=feed_dict.title)
 
         if not self.source.logo_url:
-            if 'image' in feed_dict.feed:
+            icon = get_favicon(feed_dict.url)
+            if icon:
+                self.source.logo_url = icon
+            elif 'image' in feed_dict.feed:
                 self.source.logo_url = feed_dict.feed['image'].href
 
         articles = []
